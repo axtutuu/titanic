@@ -26,10 +26,6 @@ def kesson_table(df):
     return kesson_table_ren_columns
 
 
-# kesson_table(train)
-# kesson_table(test)
-
-
 
 train["Age"] = train["Age"].fillna(train["Age"].median())
 train["Embarked"] = train["Embarked"].fillna("S")
@@ -47,7 +43,6 @@ train["Embarked"][train["Embarked"] == "Q"] = 2
 
 
 test["Age"] = test["Age"].fillna(test["Age"].median())
-# train["Embarked"] = train["Embarked"].fillna("S")
 
 test["Sex"][test["Sex"] == "male"] = 0
 test["Sex"][test["Sex"] == "female"] = 1
@@ -75,5 +70,10 @@ test_features = test[["Pclass", "Sex", "Age", "Fare"]].values
 my_prediction = my_tree_one.predict(test_features)
 
 my_prediction.shape
+
+PassengerId = np.array(test["PassengerId"]).astype(int)
+
+my_solution = pd.DataFrame(my_prediction, PassengerId, columns = ["Survived"])
+my_solution.to_csv("my_tree_one.csv", index_label = ["PassengerId"])
 
 #############  決定木   ##################
